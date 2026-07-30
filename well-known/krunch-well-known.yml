@@ -1,0 +1,36 @@
+generated: '2026-07-19'
+method: searched
+source: live HTTP probes of the Krunch base host
+description: >-
+  Results of probing the /.well-known/ discovery surface for the only base host
+  in apis.yml. Krunch publishes no API, so there is no api.* or docs.* host to
+  probe; krunchdata.io answers 308 to https://www.krunchdata.io/ for every path,
+  so only the canonical www host is recorded. Every document returned 404 - no
+  security.txt, no OpenID/OAuth metadata, no api-catalog, no ai-plugin. Nothing
+  was saved verbatim because nothing was served. This is a valid empty result.
+hosts:
+  - host: https://www.krunchdata.io
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+    other_probes:
+      - path: /llms.txt
+        status: 404
+      - path: /openapi.json
+        status: 404
+      - path: /robots.txt
+        status: 200
+        note: >-
+          Default Next.js/Vercel robots response; contains no sitemap or API
+          discovery hints, so not saved.
+  - host: https://krunchdata.io
+    note: 308 redirect to https://www.krunchdata.io/ for all probed paths
+    documents: []
