@@ -1,19 +1,44 @@
 aid: krunch
 name: Krunch
-description: Krunch is a company surfaced as a portfolio company of 500-global and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: Krunch is an on-demand product studio that delivers product management,
+  engineering, and marketing as a service, using AI and code to compress the build
+  cycle for its clients. The team was accepted into the 500 Startup Accelerator program
+  in Silicon Valley and markets prior engagements with Alibaba, Google, Camunda, New
+  Relic, Polkadot, and Bowtie. Krunch operates as a services agency rather than an
+  API provider - as of this enrichment pass it publishes a single-page marketing site
+  with a Calendly booking link and no public developer portal, documentation, API
+  reference, SDKs, or machine-readable API artifacts of any kind.
 url: https://raw.githubusercontent.com/api-evangelist/krunch/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
+image: https://www.krunchdata.io/favicon.ico
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - 500-global
 x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier-reason: services-agency-no-public-api
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
+- Consulting
+- Services
+- Product Management
+- Engineering
+- Marketing
+- Artificial Intelligence
+- Agency
 apis: []
 maintainers:
 - FN: Kin Lane
@@ -22,4 +47,17 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://krunchdata.io
+  url: https://www.krunchdata.io/
+- type: Contact
+  url: https://calendly.com/jordan-chung/krunch-demo
+- type: WellKnown
+  url: well-known/krunch-well-known.yml
+- type: DomainSecurity
+  url: security/krunch-domain-security.yml
+- type: LLMsTxt
+  url: llms/krunch-llms.txt
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence
