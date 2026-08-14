@@ -29,7 +29,7 @@ x-tier: stub
 x-tier-reason: services-agency-no-public-api
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-19'
+modified: '2026-08-13'
 tags:
 - Company
 - Consulting
@@ -50,14 +50,36 @@ common:
   url: https://www.krunchdata.io/
 - type: Contact
   url: https://calendly.com/jordan-chung/krunch-demo
-- type: WellKnown
-  url: well-known/krunch-well-known.yml
 - type: DomainSecurity
   url: security/krunch-domain-security.yml
 - type: LLMsTxt
   url: llms/krunch-llms.txt
 x-enrichment:
-  date: '2026-07-19'
-  status: backfilled
+  date: '2026-08-13'
+  status: nochange
+  artifacts_added: 1
   pass: local-v1
-  note: backfilled from .gitignore signal + verified work evidence
+  note: >-
+    Full contract-discovery pass re-run 2026-08-13. No API surface exists. Removed
+    the WellKnown pointer written on 2026-07-19 - its own probe records a 404 on
+    every path, so it was indexing an absence as a presence.
+x-coverage:
+  state: none
+  reason: no-developer-program
+  detail: >-
+    Krunch ships software only as client engagements - its entire public surface is
+    one Next.js marketing page whose only link is a Calendly booking URL, and every
+    docs, developer, pricing and contract path on it returns 404 with no api.,
+    docs. or developer.krunchdata.io host in DNS to try instead.
+  evidence:
+    - url: https://www.krunchdata.io/
+      status: 200
+    - url: https://www.krunchdata.io/developers
+      status: 404
+    - url: https://www.krunchdata.io/openapi.json
+      status: 404
+    - url: https://www.krunchdata.io/.well-known/agent-card.json
+      status: 404
+    - url: https://www.krunchdata.io/llms.txt
+      status: 404
+  checked: '2026-08-13'
