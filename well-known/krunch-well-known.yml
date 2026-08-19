@@ -1,13 +1,21 @@
-generated: '2026-07-19'
-method: searched
-source: live HTTP probes of the Krunch base host
+generated: '2026-08-13'
+method: probed
+source: live HTTP probes of the only Krunch host (www.krunchdata.io)
 description: >-
-  Results of probing the /.well-known/ discovery surface for the only base host
-  in apis.yml. Krunch publishes no API, so there is no api.* or docs.* host to
-  probe; krunchdata.io answers 308 to https://www.krunchdata.io/ for every path,
-  so only the canonical www host is recorded. Every document returned 404 - no
-  security.txt, no OpenID/OAuth metadata, no api-catalog, no ai-plugin. Nothing
-  was saved verbatim because nothing was served. This is a valid empty result.
+  Results of probing the /.well-known/ discovery surface and the wider contract
+  surface for the only host Krunch operates. Krunch publishes no API, so there is
+  no api.*, docs.* or developer.* host to probe - all of api., docs., developer.,
+  app., blog., dashboard., help., support., beta. and staging.krunchdata.io fail
+  DNS resolution (NXDOMAIN, checked 2026-08-13). The apex krunchdata.io answers
+  200 on the canonical www host. Every /.well-known/ document returned 404 - no
+  security.txt, no OpenID Connect or OAuth authorization-server metadata, no
+  oauth-protected-resource, no api-catalog, no ai-plugin.json, no A2A agent card
+  on either the 1.0 (/agent-card.json) or the legacy pre-0.3 (/agent.json) path.
+  Nothing was saved verbatim because nothing was served. This is a valid empty
+  result, and per the pipeline rule no WellKnown pointer is emitted in apis.yml
+  for a probe that records a 404 on every path - an absence must not be indexed
+  as a presence. The WellKnown pointer written in the 2026-07-19 pass has been
+  removed for that reason.
 hosts:
   - host: https://www.krunchdata.io
     documents:
@@ -17,20 +25,88 @@ hosts:
         status: 404
       - path: /.well-known/oauth-authorization-server
         status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
       - path: /.well-known/api-catalog
         status: 404
       - path: /.well-known/ai-plugin.json
         status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /.well-known/mcp.json
+        status: 404
+    contract_probes:
+      - path: /openapi.json
+        status: 404
+      - path: /openapi.yaml
+        status: 404
+      - path: /swagger.json
+        status: 404
+      - path: /v1/openapi.json
+        status: 404
+      - path: /api-docs
+        status: 404
+      - path: /redoc
+        status: 404
+      - path: /docs
+        status: 404
+      - path: /api
+        status: 404
+      - path: /developers
+        status: 404
+      - path: /graphql
+        status: 404
+        note: 404 on GET and on a POST introspection query - no GraphQL surface.
+      - path: /mcp
+        status: 404
+      - path: /sse
+        status: 404
     other_probes:
       - path: /llms.txt
         status: 404
-      - path: /openapi.json
+      - path: /sitemap.xml
+        status: 404
+      - path: /pricing
+        status: 404
+      - path: /privacy-policy
+        status: 404
+      - path: /terms
+        status: 404
+      - path: /about
+        status: 404
+      - path: /contact
+        status: 404
+      - path: /blog
+        status: 404
+      - path: /careers
         status: 404
       - path: /robots.txt
         status: 200
         note: >-
-          Default Next.js/Vercel robots response; contains no sitemap or API
-          discovery hints, so not saved.
+          CHANGED since the 2026-07-19 pass, which recorded a default Next.js
+          robots response. The file is now 24 lines of Cloudflare Content Signals
+          Policy boilerplate - the explanatory comment block only. It sets no
+          content-signal values, declares no User-agent group, and carries no
+          Disallow, Allow or Sitemap directive, so nothing is actually reserved
+          or forbidden by it. Recorded, not saved: it conveys no discovery
+          information.
   - host: https://krunchdata.io
-    note: 308 redirect to https://www.krunchdata.io/ for all probed paths
+    note: >-
+      Apex resolves and answers 200, serving the same single-page Next.js site as
+      the canonical www host. Not probed separately for documents.
     documents: []
+dns:
+  nameservers:
+    - darl.ns.cloudflare.com
+    - roxy.ns.cloudflare.com
+  mx: Google Workspace (aspmx.l.google.com et al)
+  txt:
+    - google-site-verification
+    - hubspot-developer-verification
+  note: >-
+    The hubspot-developer-verification TXT record shows Krunch holds a HubSpot
+    developer account, which is how a HubSpot app or integration is built. It is
+    a third-party platform account, not a Krunch API surface, and no HubSpot
+    Marketplace listing for Krunch was found. Recorded as a lead only.
